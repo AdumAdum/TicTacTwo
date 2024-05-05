@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// Clickable TicTacToe square
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
@@ -8,6 +9,7 @@ function Square({ value, onSquareClick }) {
   );
 }
 
+// Board class that displays grids of sqaures and handles win conditions
 function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
     if (calculateWinner(squares) || squares[i]) {
@@ -73,18 +75,21 @@ function Board({ xIsNext, squares, onPlay }) {
   );
 }
 
+// Main function that handles game logic
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
+  // Updates move history
   function handlePlay(nextSquares) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
 
+  // Read from move history to go back in time
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
   }
@@ -117,6 +122,7 @@ export default function Game() {
   );
 }
 
+// All combinations of winning moves on board 1 and 2
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
